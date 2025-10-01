@@ -11,6 +11,8 @@ class Inbound extends Component
 
     public function render()
     {
+        $this->show = session()->get('show', 1);
+
         $dataTable = collect([
             ['id' => 1, 'date' => '2023-01-01', 'inbound_code' => 'INB001', 'origin_code' => 'ORI001', 'status' => 'requested'],
             ['id' => 2, 'date' => '2023-01-02', 'inbound_code' => 'INB002', 'origin_code' => 'ORI002', 'status' => 'received'],
@@ -31,5 +33,6 @@ class Inbound extends Component
     function changeShow($value)
     {
         $this->show = $value;
+        session()->put('show', $value);
     }
 }
