@@ -19,6 +19,10 @@ class Inbound extends Component
             ['id' => 5, 'date' => '2023-01-05', 'inbound_code' => 'INB005', 'origin_code' => 'ORI005', 'status' => 'done'],
         ]);
 
+        $dataTable = $dataTable->filter(function ($item) {
+            return str_contains(strtolower($item['inbound_code']), strtolower($this->search));
+        });
+
         $dataTable = $dataTable->take($this->show);
 
         return view('livewire.inbound', compact('dataTable'));

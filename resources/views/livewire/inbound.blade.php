@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-lg-7 my-1">
                     <input type="text" class="form-control form-control-sm w-full" placeholder="Cari..."
-                        wire:model="search">
+                        wire:model.live.debounce.500ms="search">
                 </div>
                 <div class="col-lg-1 my-1">
                     <div class="btn-group" role="group">
