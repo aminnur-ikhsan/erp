@@ -29,6 +29,10 @@
                     'subName' => 'Barang',
                     'url' => '/barang',
                 ],
+                [
+                    'subName' => 'Inbound',
+                    'url' => '/wh/inbound',
+                ],
             ],
         ],
         [

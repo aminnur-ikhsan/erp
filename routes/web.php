@@ -34,6 +34,10 @@ Route::get('/barang', function () {
     return view('page.barang');
 });
 
+Route::get('/wh/inbound', function () {
+    return view('page.inbound');
+});
+
 Route::get('/pegawai', function () {
     return view('page.employee');
 });
