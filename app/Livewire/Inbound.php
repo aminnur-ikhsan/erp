@@ -22,7 +22,15 @@ class Inbound extends Component
         ]);
 
         $dataTable = $dataTable->filter(function ($item) {
-            return str_contains(strtolower($item['inbound_code']), strtolower($this->search));
+            $temp1 = str_contains(strtolower($item['inbound_code']), strtolower($this->search));
+            if ($temp1) {
+                return $temp1;
+            }
+            $temp2 = str_contains(strtolower($item['origin_code']), strtolower($this->search));
+            if ($temp2) {
+                return $temp2;
+            }
+            return false;
         });
 
         $dataTable = $dataTable->take($this->show);
