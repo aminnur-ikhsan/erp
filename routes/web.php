@@ -26,6 +26,14 @@ Route::get('/logout', function () {
     return redirect('/login');
 });
 
+Route::get('/fn/laporan', function () {
+    return view('page.fn-report');
+});
+
+Route::get('/fn/accounts', function () {
+    return view('page.fn-accounts');
+});
+
 Route::get('/beranda', function () {
     return view('page.home');
 });

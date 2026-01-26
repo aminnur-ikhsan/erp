@@ -17,7 +17,11 @@
             'list' => [
                 [
                     'subName' => 'Laporan',
-                    'url' => '/laporan',
+                    'url' => '/fn/laporan',
+                ],
+                [
+                    'subName' => 'Daftar Akun',
+                    'url' => '/fn/accounts',
                 ],
             ],
         ],
