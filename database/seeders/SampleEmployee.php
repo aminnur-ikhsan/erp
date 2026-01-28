@@ -19,11 +19,11 @@ class SampleEmployee extends Seeder
         $many = 5;
 
         for ($i = 1; $i <= $many; $i++) {
-            DataEmplpoyeesModel::insert([
-                'name'    => $faker->name,
-                'email'   => $faker->unique()->safeEmail,
-                'address' => $faker->address,
-            ]);
+            $employee = new DataEmplpoyeesModel;
+            $employee['name'] = $faker->name;
+            $employee['email'] = $faker->unique()->safeEmail;
+            $employee['address'] = $faker->address;
+            $employee->save();
         }
     }
 }

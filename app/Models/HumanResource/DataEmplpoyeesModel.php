@@ -10,6 +10,7 @@ class DataEmplpoyeesModel extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public $timestamps = true;
     protected $table = 'humanresource.data_employees';
     protected $primaryKey = 'id';
     protected $softDelete = true;
