@@ -16,6 +16,7 @@ class Employee extends Component
     public $data = [];
     public $dataEdit = null;
 
+    // Default Action
     public function render()
     {
         $this->showAll();
@@ -36,29 +37,16 @@ class Employee extends Component
         $this->resetErrorBag();
     }
 
+    // Blade Action
     public function save()
     {
         $this->validate([
-            'nama'    => 'required|string|max:255',
-            'email'   => 'required|email|unique:data_employees,email',
-            'address' => 'required|string',
+            'email'   => 'unique:data_employees,email',
         ], [
-            'nama.required'    => 'Nama karyawan wajib diisi.',
-            'email.required'   => 'Alamat email tidak boleh kosong.',
-            'email.email'      => 'Format email yang Anda masukkan tidak valid.',
             'email.unique'     => 'Email ini sudah terdaftar di sistem, silakan gunakan email lain.',
-            'address.required' => 'Alamat lengkap wajib diisi.',
         ]);
 
-        $employee = new DataEmplpoyeesModel;
-        $employee['name'] = $this->nama;
-        $employee['email'] = $this->email;
-        $employee['address'] = $this->address;
-        $employee->save();
-
-        $this->showAll();
-        $this->resetAll();
-        session()->flash('success', 'Data berhasil disimpan');
+        $this->createOrUpdate();
     }
 
     function edit($key)
@@ -83,6 +71,18 @@ class Employee extends Component
 
     function update()
     {
+        $this->createOrUpdate($this->dataEdit);
+    }
+
+    function confirmToDelete($key)
+    {
+        $this->resetAll();
+        $this->key = $key;
+    }
+
+    // DB Action
+    private function createOrUpdate($dataEdit = null)
+    {
         $this->validate([
             'nama'    => 'required|string|max:255',
             'email'   => 'required|email',
@@ -94,21 +94,20 @@ class Employee extends Component
             'address.required' => 'Alamat lengkap wajib diisi.',
         ]);
 
-        // rewrite data
-        $employee = $this->dataEdit;
+        if ($dataEdit) {
+            $employee = $this->dataEdit;
+        } else {
+            $employee = new DataEmplpoyeesModel;
+        }
+
         $employee['name'] = $this->nama;
         $employee['email'] = $this->email;
         $employee['address'] = $this->address;
         $employee->save();
 
+        $this->showAll();
         $this->resetAll();
-        session()->flash('success', 'Data berhasil diupdate');
-    }
-
-    function confirmToDelete($key)
-    {
-        $this->resetAll();
-        $this->key = $key;
+        session()->flash('success', 'Data berhasil disimpan');
     }
 
     function delete()
@@ -118,6 +117,7 @@ class Employee extends Component
 
         // Validation
         if (empty($employee)) {
+            $this->resetAll();
             throw ValidationException::withMessages([
                 'message' => 'Data pegawai tidak ditemukan.',
             ]);
