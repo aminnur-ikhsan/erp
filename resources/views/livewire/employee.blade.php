@@ -89,13 +89,13 @@
                         <td>{{ $item['email'] }}</td>
                         <td>{{ $item['address'] }}</td>
                         <td>
-                            <button type="button" class="btn btn-warning btn-sm" wire:click="edit({{ $key }})">Edit</button>
+                            <button type="button" class="btn btn-warning btn-sm" wire:click="edit({{ $item['id'] }})">Edit</button>
                             <button
                                 type="button"
                                 class="btn btn-danger btn-sm"
                                 data-bs-toggle="modal"
                                 data-bs-target="#exampleModal"
-                                wire:click="confirmToDelete({{ $key }})"
+                                wire:click="confirmToDelete({{ $item['id'] }})"
                             ><i class="fa-solid fa-trash-can"></i></button>
                         </td>
                     </tr>
