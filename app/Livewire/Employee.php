@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use App\Models\HumanResource\DataEmplpoyeesModel;
 
 class Employee extends Component
 {
@@ -11,18 +12,17 @@ class Employee extends Component
     public $address;
     public $isEdit = false;
     public $key = null;
-
-    public $data = [
-        [
-            "nama" => "Andrew",
-            "email" => "andrew@example.com",
-            "address" => "Jalan Raya No. 1",
-        ]
-    ];
+    public $data = [];
 
     public function render()
     {
+        $this->showAll();
         return view('livewire.employee');
+    }
+
+    function showAll()
+    {
+        $this->data = DataEmplpoyeesModel::select('name as nama', 'email', 'address')->orderBy('id', 'desc')->get();
     }
 
     function resetAll()
@@ -36,17 +36,24 @@ class Employee extends Component
     public function save()
     {
         $this->validate([
-            'nama' => 'required',
-            'email' => 'required|email',
-            'address' => 'required',
+            'nama'    => 'required|string|max:255',
+            'email'   => 'required|email|unique:data_employees,email',
+            'address' => 'required|string',
+        ], [
+            'nama.required'    => 'Nama karyawan wajib diisi.',
+            'email.required'   => 'Alamat email tidak boleh kosong.',
+            'email.email'      => 'Format email yang Anda masukkan tidak valid.',
+            'email.unique'     => 'Email ini sudah terdaftar di sistem, silakan gunakan email lain.',
+            'address.required' => 'Alamat lengkap wajib diisi.',
         ]);
 
-        $this->data[] = [
-            "nama" => $this->nama,
-            "email" => $this->email,
-            "address" => $this->address,
-        ];
+        $employee = new DataEmplpoyeesModel;
+        $employee['name'] = $this->nama;
+        $employee['email'] = $this->email;
+        $employee['address'] = $this->address;
+        $employee->save();
 
+        $this->showAll();
         $this->resetAll();
         session()->flash('success', 'Data berhasil disimpan');
     }
