@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\HumanResource\DataEmplpoyeesModel;
+use Illuminate\Validation\ValidationException;
 
 class Employee extends Component
 {
@@ -22,7 +23,7 @@ class Employee extends Component
 
     function showAll()
     {
-        $this->data = DataEmplpoyeesModel::select('name as nama', 'email', 'address')->orderBy('id', 'desc')->get();
+        $this->data = DataEmplpoyeesModel::select('id', 'name as nama', 'email', 'address')->orderBy('id', 'desc')->get();
     }
 
     function resetAll()
@@ -63,10 +64,17 @@ class Employee extends Component
         // format condition
         $this->key = $key;
         $this->isEdit = true;
-        $getData = $this->data[$key];
+        $getData = DataEmplpoyeesModel::find($key);
+
+        // Validation
+        if (empty($getData)) {
+            throw ValidationException::withMessages([
+                'message' => 'Data pegawai tidak ditemukan.',
+            ]);
+        }
 
         // show data
-        $this->nama = $getData['nama'];
+        $this->nama = $getData['name'];
         $this->email = $getData['email'];
         $this->address = $getData['address'];
     }
