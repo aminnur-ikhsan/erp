@@ -30,4 +30,9 @@ class Inbound extends Component
 
         return view('livewire.inbound', compact('dataTable'));
     }
+
+    public function kemana()
+    {
+        return redirect('/kemana');
+    }
 }

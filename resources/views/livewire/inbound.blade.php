@@ -58,6 +58,10 @@
                     <td>
                         @php
                         $statusMap = [
+                            'delivery' => [
+                                'class' => 'info',
+                                'text' => 'Pengiriman',
+                            ],
                             'requested' => [
                                 'class' => 'warning',
                                 'text' => 'Diajukan',
@@ -89,7 +93,7 @@
                         </span>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-secondary">Detail</button>
+                        <button class="btn btn-sm btn-secondary" wire:click="kemana">Detail</button>
                     </td>
                 </tr>
                 @endforeach
