@@ -20,4 +20,11 @@ class IndboundModel extends Model
         'origin_code',
         'status',
     ];
+
+    public const STATUS_DELIVERY    = 'delivery';
+    public const STATUS_REQUESTED   = 'requested';
+    public const STATUS_RECEIVED    = 'received';
+    public const STATUS_REJECTED    = 'rejected';
+    public const STATUS_PROCESSED   = 'processed';
+    public const STATUS_DONE        = 'done';
 }
