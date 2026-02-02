@@ -4,12 +4,10 @@
         <div class="my-2 p-3">
             <div class="d-flex row">
                 <div class="col-lg-2 my-1">
-                    <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                        <option value="1" wire:click="changeShow(1)" {{ $show == 1 ? 'selected' : '' }}>1 baris</option>
-                        <option value="2" wire:click="changeShow(2)" {{ $show == 2 ? 'selected' : '' }}>2 baris</option>
-                        <option value="10" wire:click="changeShow(10)" {{ $show == 10 ? 'selected' : '' }}>10 baris</option>
-                        <option value="25" wire:click="changeShow(25)" {{ $show == 25 ? 'selected' : '' }}>25 baris</option>
-                        <option value="50" wire:click="changeShow(50)" {{ $show == 50 ? 'selected' : '' }}>50 baris</option>
+                    <select class="form-select form-select-sm" wire:model.live="show" aria-label=".form-select-sm example">
+                        <option value="10">10 baris</option>
+                        <option value="25">25 baris</option>
+                        <option value="50">50 baris</option>
                     </select>
                 </div>
                 <div class="col-lg-7 my-1">
@@ -60,6 +58,10 @@
                     <td>
                         @php
                         $statusMap = [
+                            'delivery' => [
+                                'class' => 'info',
+                                'text' => 'Pengiriman',
+                            ],
                             'requested' => [
                                 'class' => 'warning',
                                 'text' => 'Diajukan',
@@ -91,7 +93,7 @@
                         </span>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-secondary">Detail</button>
+                        <button class="btn btn-sm btn-secondary" wire:click="kemana">Detail</button>
                     </td>
                 </tr>
                 @endforeach
